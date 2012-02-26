@@ -54,10 +54,11 @@ Patch145: bash-3.2-audit.patch
 Patch146: bash-3.2-fc.patch
 
 Requires(post): ncurses-libs
-BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
+Requires(postun): /bin/grep
+Requires(postun): /bin/mv
 
 BuildRequires: texinfo bison
-BuildRequires: ncurses-devel
+BuildRequires: pkgconfig(ncurses), readline-devel
 BuildRequires: autoconf, gettext
 
 %description
@@ -118,7 +119,7 @@ echo %{release} > _patchlevel
 
 %build
 autoconf
-%configure --with-bash-malloc=no --with-afs
+%configure --with-bash-malloc=no --with-afs --with-installed-readline
 
 # Recycles pids is neccessary. When bash's last fork's pid was X
 # and new fork's pid is also X, bash has to wait for this same pid.
