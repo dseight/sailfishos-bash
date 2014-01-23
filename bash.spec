@@ -18,6 +18,8 @@ Epoch: 1
 Source1: dot-bashrc
 Source2: dot-bash_profile
 Source3: dot-bash_logout
+Source4: config.guess
+Source5: config.sub
 
 # Official upstream patches
 Patch049: ftp://ftp.gnu.org/pub/gnu/bash/bash-3.2-patches/bash32-049
@@ -112,6 +114,10 @@ This package contains documentation files for %{name}.
 %patch144 -p1 -b .command_not_found
 %patch145 -p1 -b .audit
 %patch146 -p1 -b .fc
+
+cp %SOURCE4 support/config.guess
+cp %SOURCE5 support/config.sub
+chmod +x support/config.guess support/config.sub
 
 echo %{version} > _distribution
 echo %{release} > _patchlevel
