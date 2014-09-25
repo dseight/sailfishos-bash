@@ -1,3 +1,6 @@
+* Thu Sep 25 2014 Pasi Sjöholm <pasi.sjoholm@jolla.com> - 3.2.52
+- Fix security vulnerability CVE-2014-6271
+
 * Fri May 27 2011 Anas Nashif <anas.nashif@intel.com> - 3.2.51
 - Make it work with auto-doc macro
 

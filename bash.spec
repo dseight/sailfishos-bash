@@ -1,5 +1,5 @@
 #%define beta_tag rc1
-%define patchlevel .51
+%define patchlevel .52
 %define baseversion 3.2
 
 Version: %{baseversion}%{patchlevel}
@@ -25,6 +25,7 @@ Source5: config.sub
 Patch049: ftp://ftp.gnu.org/pub/gnu/bash/bash-3.2-patches/bash32-049
 Patch050: ftp://ftp.gnu.org/pub/gnu/bash/bash-3.2-patches/bash32-050
 Patch051: ftp://ftp.gnu.org/pub/gnu/bash/bash-3.2-patches/bash32-051
+Patch052: ftp://ftp.gnu.org/pub/gnu/bash/bash-3.2-patches/bash32-052
 
 # Other patches
 Patch100: bash-2.03-paths.patch
@@ -86,6 +87,7 @@ This package contains documentation files for %{name}.
 %patch049 -p0 -b .049
 %patch050 -p0 -b .050
 %patch051 -p0 -b .051
+%patch052 -p0 -b .052
 
 # Other patches
 %patch100 -p1 -b .paths
