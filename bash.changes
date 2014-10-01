@@ -1,5 +1,8 @@
+* Wed Oct 1 2014 Pasi Sjöholm <pasi.sjoholm@jolla.com> - 3.2.55
+- Update to -55 to fix two local buffer overflows
+
 * Tue Sep 30 2014 Pasi Sjöholm <pasi.sjoholm@jolla.com> - 3.2.54
-- Fix additional enconding/parsing problems found after CVE-2014-6271 and CVE-2014-7169. 
+- Fix additional encoding/parsing problems found after CVE-2014-6271 and CVE-2014-7169. 
 
 * Thu Sep 26 2014 Pasi Sjöholm <pasi.sjoholm@jolla.com> - 3.2.53
 - Fix security vulnerability CVE-2014-7169
