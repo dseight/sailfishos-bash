@@ -1,3 +1,6 @@
+* Fri Jan 4 2019 Tomi Leppänen <tomi.leppanen@jolla.com> - 3.2.57-2
+- [packaging] Remove bash-docs package. Contributes to JB#38578
+
 * Mon Oct 6 2014 Pasi Sjöholm <pasi.sjoholm@jolla.com> - 3.2.57
 - Update to -57 to fix more parsing issues
 
@@ -7,7 +10,7 @@
 * Tue Sep 30 2014 Pasi Sjöholm <pasi.sjoholm@jolla.com> - 3.2.54
 - Fix additional encoding/parsing problems found after CVE-2014-6271 and CVE-2014-7169. 
 
-* Thu Sep 26 2014 Pasi Sjöholm <pasi.sjoholm@jolla.com> - 3.2.53
+* Fri Sep 26 2014 Pasi Sjöholm <pasi.sjoholm@jolla.com> - 3.2.53
 - Fix security vulnerability CVE-2014-7169
 
 * Thu Sep 25 2014 Pasi Sjöholm <pasi.sjoholm@jolla.com> - 3.2.52
