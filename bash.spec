@@ -5,7 +5,7 @@
 Version: %{baseversion}%{patchlevel}
 Name: bash
 Summary: The GNU Bourne Again shell
-Release: 1
+Release: 2
 Group: System/Shells
 License: GPLv2+
 Url: http://www.gnu.org/software/bash
@@ -80,9 +80,9 @@ Group: Development/Languages
 Requires: %{name} = %{version}-%{release}
 
 %description doc
-This package contains documentation files for %{name}.
+Man and info pages for %{name}.
 
-%define pkgdocdir %{_datadir}/doc/%{name}-%{version}
+%define pkgdocdir %{_docdir}/%{name}-%{version}
 
 %prep
 #%setup -q -a 2
@@ -273,14 +273,18 @@ if [ "$1" = 0 ]; then
     /bin/mv /etc/shells.new /etc/shells
 fi
 
-%docs_package
-
 %lang_package
 
 %files 
 %defattr(-,root,root,-)
+%license COPYING
 %config(noreplace) /etc/skel/.b*
 /bin/sh
 /bin/bash
 %attr(0755,root,root) %{_bindir}/bashbug-*
 
+%files doc
+%defattr(-,root,root,-)
+%{_infodir}/%{name}.*
+%{_mandir}/man1/..1.*
+%{_mandir}/man*/*
