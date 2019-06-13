@@ -68,6 +68,10 @@ BuildRequires: texinfo bison
 BuildRequires: ncurses-devel
 BuildRequires: autoconf, gettext
 
+Requires: filesystem >= 3.2
+Provides: /bin/bash
+Provides: /bin/sh
+
 %description
 The GNU Bourne Again shell (Bash) is a shell or command language
 interpreter that is compatible with the Bourne shell (sh). Bash
@@ -193,12 +197,9 @@ rm -f $RPM_BUILD_ROOT/%{_mandir}/man1/printf.1
 rm -f $RPM_BUILD_ROOT/%{_mandir}/man1/true.1
 rm -f $RPM_BUILD_ROOT/%{_mandir}/man1/false.1
 
-pushd $RPM_BUILD_ROOT
-mkdir ./bin
-mv ./usr/bin/bash ./bin
-ln -sf bash ./bin/sh
-rm -f .%{_infodir}/dir
-popd
+ln -sf %{_bindir}/bash %{buildroot}%{_bindir}/sh
+rm -f %{buildroot}%{_infodir}/dir
+
 mkdir -p $RPM_BUILD_ROOT/etc/skel
 install -c -m644 %SOURCE1 $RPM_BUILD_ROOT/etc/skel/.bashrc
 install -c -m644 %SOURCE2 $RPM_BUILD_ROOT/etc/skel/.bash_profile
@@ -235,7 +236,9 @@ rm -rf $RPM_BUILD_ROOT
 %post -p <lua>
 bashfound = false;
 shfound = false;
- 
+usrbashfound = false;
+usrshfound = false;
+
 f = io.open("/etc/shells", "r");
 if f == nil
 then
@@ -243,9 +246,17 @@ then
 else
   repeat
     t = f:read();
+    if t == "/usr/bin/bash"
+    then
+      usrbashfound = true;
+    end
     if t == "/bin/bash"
     then
       bashfound = true;
+    end
+    if t == "/usr/bin/sh"
+    then
+      usrshfound = true;
     end
     if t == "/bin/sh"
     then
@@ -254,8 +265,9 @@ else
   until t == nil;
 end
 f:close()
- 
+
 f = io.open("/etc/shells", "a");
+
 if not bashfound
 then
   f:write("/bin/bash\n")
@@ -264,23 +276,31 @@ if not shfound
 then
   f:write("/bin/sh\n")
 end
+if not usrbashfound
+then
+  f:write("/usr/bin/bash\n")
+end
+if not usrshfound
+then
+  f:write("/usr/bin/sh\n")
+end
 f:close()
 
 %postun
 if [ "$1" = 0 ]; then
-    /bin/grep -v '^/bin/bash$' < /etc/shells | \
-      /bin/grep -v '^/bin/sh$' > /etc/shells.new
+    /bin/grep -v '^/usr*/bin/bash$' < /etc/shells | \
+      /bin/grep -v '^/usr*/bin/sh$' > /etc/shells.new
     /bin/mv /etc/shells.new /etc/shells
 fi
 
 %lang_package
 
-%files 
+%files
 %defattr(-,root,root,-)
 %license COPYING
 %config(noreplace) /etc/skel/.b*
-/bin/sh
-/bin/bash
+%{_bindir}/sh
+%{_bindir}/bash
 %attr(0755,root,root) %{_bindir}/bashbug-*
 
 %files doc
