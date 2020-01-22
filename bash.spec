@@ -71,6 +71,8 @@ BuildRequires: autoconf, gettext
 Requires: filesystem >= 3.2
 Provides: /bin/bash
 Provides: /bin/sh
+Provides: /usr/bin/bash
+Provides: /usr/bin/sh
 
 %description
 The GNU Bourne Again shell (Bash) is a shell or command language
