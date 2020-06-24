@@ -1,3 +1,6 @@
+* Wed Jun 24 2020 Tomi Leppänen <tomi.leppanen@jolla.com> - 3.2.57-3
+- [packaging] Rename to gnu-bash. Contributes to JB#39735
+
 * Fri Jan 4 2019 Tomi Leppänen <tomi.leppanen@jolla.com> - 3.2.57-2
 - [packaging] Remove bash-docs package. Contributes to JB#38578
 
