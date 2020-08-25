@@ -1,19 +1,16 @@
-#%define beta_tag rc1
 %define patchlevel .57
 %define baseversion 3.2
 
 Version: %{baseversion}%{patchlevel}
-Name: bash
+Name: gnu-bash
 Summary: The GNU Bourne Again shell
-Release: 2
-Group: System/Shells
+Release: 3
 License: GPLv2+
-Url: http://www.gnu.org/software/bash
+Url: https://git.sailfishos.org/mer-core/bash
 Source0: ftp://ftp.gnu.org/gnu/bash/bash-3.2.48.tar.gz
-Epoch: 1
 
-# For now there isn't any doc
-#Source2: ftp://ftp.gnu.org/gnu/bash/bash-doc-%{version}.tar.gz
+Obsoletes: bash < 1:3.2.57+git1
+Provides: bash = 1:3.2.57+git1
 
 Source1: dot-bashrc
 Source2: dot-bash_profile
@@ -62,7 +59,6 @@ Patch145: bash-3.2-audit.patch
 Patch146: bash-3.2-fc.patch
 
 Requires(post): ncurses-libs
-BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildRequires: texinfo bison
 BuildRequires: ncurses-devel
@@ -76,17 +72,13 @@ incorporates useful features from the Korn shell (ksh) and the C shell
 
 %package doc
 Summary: Documentation files for %{name}
-Group: Development/Languages
 Requires: %{name} = %{version}-%{release}
 
 %description doc
 Man and info pages for %{name}.
 
-%define pkgdocdir %{_docdir}/%{name}-%{version}
-
 %prep
-#%setup -q -a 2
-%setup -q -n %{name}-%{baseversion}.48
+%setup -q -n bash-%{baseversion}.48
 
 # Official upstream patches
 %patch049 -p0 -b .049
@@ -221,7 +213,8 @@ do
 done
 
 chmod a-x doc/*.sh
-%find_lang %{name}
+%find_lang bash
+mv bash.lang %{name}.lang
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -285,6 +278,6 @@ fi
 
 %files doc
 %defattr(-,root,root,-)
-%{_infodir}/%{name}.*
+%{_infodir}/bash.*
 %{_mandir}/man1/..1.*
 %{_mandir}/man*/*
