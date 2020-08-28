@@ -1,5 +1,36 @@
---- bash-3.2/lib/readline/readline.c.audit	2008-01-18 13:06:25.000000000 +0100
-+++ bash-3.2/lib/readline/readline.c	2008-01-18 13:06:25.000000000 +0100
+diff -up bash-4.2/config.h.in.audit bash-4.2/config.h.in
+--- bash-4.2/config.h.in.audit	2013-01-31 16:26:16.857698992 +0100
++++ bash-4.2/config.h.in	2013-01-31 16:26:16.876699255 +0100
+@@ -1131,6 +1131,14 @@
+ 
+ /* End additions for lib/intl */
+ 
++
++/* Additions for lib/readline */
++
++/* Define if you have <linux/audit.h> and it defines AUDIT_USER_TTY */
++#undef HAVE_DECL_AUDIT_USER_TTY
++
++/* End additions for lib/readline */
++
+ #include "config-bot.h"
+ 
+ #endif /* _CONFIG_H_ */
+diff -up bash-4.2/configure.in.audit bash-4.2/configure.in
+--- bash-4.2/configure.in.audit	2013-01-31 16:26:16.858699005 +0100
++++ bash-4.2/configure.ac	2013-01-31 16:26:16.877699269 +0100
+@@ -888,6 +888,8 @@ BASH_FUNC_DUP2_CLOEXEC_CHECK
+ BASH_SYS_PGRP_SYNC
+ BASH_SYS_SIGNAL_VINTAGE
+ 
++AC_CHECK_DECLS([AUDIT_USER_TTY],,, [[#include <linux/audit.h>]])
++
+ dnl checking for the presence of certain library symbols
+ BASH_SYS_ERRLIST
+ BASH_SYS_SIGLIST
+diff -up bash-4.2/lib/readline/readline.c.audit bash-4.2/lib/readline/readline.c
+--- bash-4.2/lib/readline/readline.c.audit	2013-01-31 16:26:16.871699185 +0100
++++ bash-4.2/lib/readline/readline.c	2013-01-31 17:24:23.902744860 +0100
 @@ -55,6 +55,12 @@
  extern int errno;
  #endif /* !errno */
@@ -13,7 +44,7 @@
  /* System-specific feature definitions and include files. */
  #include "rldefs.h"
  #include "rlmbutil.h"
-@@ -292,7 +298,47 @@
+@@ -301,7 +307,48 @@ rl_set_prompt (prompt)
    rl_visible_prompt_length = rl_expand_prompt (rl_prompt);
    return 0;
  }
@@ -45,6 +76,7 @@
 +  iov[1].iov_base = string;
 +  iov[1].iov_len = size;
 +  addr.nl_family = AF_NETLINK;
++  addr.nl_pad = 0;
 +  addr.nl_pid = 0;
 +  addr.nl_groups = 0;
 +  msg.msg_name = &addr;
@@ -62,43 +94,3 @@
  /* Read a line of input.  Prompt with PROMPT.  An empty PROMPT means
     none.  A return value of NULL means that EOF was encountered. */
  char *
-@@ -326,6 +372,11 @@
-   rl_clear_signals ();
- #endif
- 
-+#if defined (HAVE_DECL_AUDIT_USER_TTY)
-+  if (value != NULL)
-+    audit_tty (value);
-+#endif
-+
-   return (value);
- }
- 
---- bash-3.2/configure.in.audit	2008-01-18 13:06:25.000000000 +0100
-+++ bash-3.2/configure.in	2008-01-18 13:06:25.000000000 +0100
-@@ -871,6 +871,8 @@
- BASH_SYS_PGRP_SYNC
- BASH_SYS_SIGNAL_VINTAGE
- 
-+AC_CHECK_DECLS([AUDIT_USER_TTY],,, [[#include <linux/audit.h>]])
-+
- dnl checking for the presence of certain library symbols
- BASH_SYS_ERRLIST
- BASH_SYS_SIGLIST
---- bash-3.2/config.h.in.audit	2008-01-18 13:06:25.000000000 +0100
-+++ bash-3.2/config.h.in	2008-01-18 13:10:19.000000000 +0100
-@@ -1058,6 +1058,14 @@
- 
- /* End additions for lib/intl */
- 
-+
-+/* Additions for lib/readline */
-+
-+/* Define if you have <linux/audit.h> and it defines AUDIT_USER_TTY */
-+#undef HAVE_DECL_AUDIT_USER_TTY
-+
-+/* End additions for lib/readline */
-+
- #include "config-bot.h"
- 
- #endif /* _CONFIG_H_ */
