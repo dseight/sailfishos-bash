@@ -1,0 +1,61 @@
+diff --git a/tests/exec.right b/tests/exec.right
+index 6075cc8..0b3f02c 100644
+--- a/tests/exec.right
++++ b/tests/exec.right
+@@ -51,7 +51,6 @@ this is ohio-state
+ 0
+ 1
+ testb
+-expand_aliases 	on
+ 1
+ 1
+ 1
+diff --git a/tests/execscript b/tests/execscript
+index c1819de..9227a4a 100644
+--- a/tests/execscript
++++ b/tests/execscript
+@@ -108,8 +108,6 @@ ${THIS_SH} ./exec6.sub
+ # checks for properly deciding what constitutes an executable file
+ ${THIS_SH} ./exec7.sub
+ 
+-${THIS_SH} -i ${PWD}/exec8.sub
+-
+ ${THIS_SH} ./exec9.sub
+ 
+ ${THIS_SH} ./exec10.sub
+diff --git a/tests/read.right b/tests/read.right
+index 73cb704..a92fe7f 100644
+--- a/tests/read.right
++++ b/tests/read.right
+@@ -33,14 +33,6 @@ a = abcdefg
+ a = xyz
+ a = -xyz 123-
+ a = abc
+-timeout 1: ok
+-
+-timeout 2: ok
+-
+-./read2.sub: line 23: read: -3: invalid timeout specification
+-1
+-
+-abcde
+ ./read3.sub: line 4: read: -1: invalid number
+ abc
+ ab
+diff --git a/tests/read.tests b/tests/read.tests
+index f67cd00..083f4a4 100644
+--- a/tests/read.tests
++++ b/tests/read.tests
+@@ -82,9 +82,6 @@ echo " foo" | { IFS=$':' ; read line; recho "$line"; }
+ # test read -d delim behavior
+ ${THIS_SH} ./read1.sub
+ 
+-# test read -t timeout behavior
+-${THIS_SH} ./read2.sub
+-
+ # test read -n nchars behavior
+ ${THIS_SH} ./read3.sub
+ 
+-- 
+2.17.2
+
