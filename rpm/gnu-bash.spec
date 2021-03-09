@@ -188,43 +188,6 @@ rm -rf "%{buildroot}/%{_pkgdocdir}/examples/loadables"
 # ***** bash doesn't use install-info. It's always listed in %%{_infodir}/dir
 # to prevent prereq loops
 
-# post is in lua so that we can run it without any external deps.
-# Helps for bootstrapping a new install.
-# Jesse Keating 2009-01-29 (code from Ignacio Vazquez-Abrams)
-# Roman Rakus 2011-11-07 (code from Sergey Romanov) #740611
-%post -p <lua>
-nl        = '\n'
-sh        = '/bin/sh'..nl
-bash      = '/bin/bash'..nl
-f = io.open('/etc/shells', 'a+')
-if f then
-  local shells = nl..f:read('*all')..nl
-  if not shells:find(nl..sh) then f:write(sh) end
-  if not shells:find(nl..bash) then f:write(bash) end
-  f:close()
-end
-
-%postun -p <lua>
--- Run it only if we are uninstalling
-if arg[2] == "0"
-then
-  t={}
-  for line in io.lines("/etc/shells")
-  do
-    if line ~= "/bin/bash" and line ~= "/bin/sh"
-    then
-      table.insert(t,line)
-    end
-  end
-
-  f = io.open("/etc/shells", "w+")
-  for n,line in pairs(t)
-  do
-    f:write(line.."\n")
-  end
-  f:close()
-end
-
 %files
 %defattr(-,root,root,-)
 %license COPYING
