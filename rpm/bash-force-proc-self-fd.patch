@@ -1,0 +1,39 @@
+diff --git a/aclocal.m4 b/aclocal.m4
+index 1413267f..185c2251 100644
+--- a/aclocal.m4
++++ b/aclocal.m4
+@@ -1551,32 +1551,8 @@ fi
+ 
+ AC_DEFUN(BASH_CHECK_DEV_FD,
+ [AC_MSG_CHECKING(whether /dev/fd is available)
+-AC_CACHE_VAL(bash_cv_dev_fd,
+-[bash_cv_dev_fd=""
+-if test -d /dev/fd  && (exec test -r /dev/fd/0 < /dev/null) ; then
+-# check for systems like FreeBSD 5 that only provide /dev/fd/[012]
+-   if (exec test -r /dev/fd/3 3</dev/null) ; then
+-     bash_cv_dev_fd=standard
+-   else
+-     bash_cv_dev_fd=absent
+-   fi
+-fi
+-if test -z "$bash_cv_dev_fd" ; then 
+-  if test -d /proc/self/fd && (exec test -r /proc/self/fd/0 < /dev/null) ; then
+-    bash_cv_dev_fd=whacky
+-  else
+-    bash_cv_dev_fd=absent
+-  fi
+-fi
+-])
+-AC_MSG_RESULT($bash_cv_dev_fd)
+-if test $bash_cv_dev_fd = "standard"; then
+-  AC_DEFINE(HAVE_DEV_FD)
+-  AC_DEFINE(DEV_FD_PREFIX, "/dev/fd/")
+-elif test $bash_cv_dev_fd = "whacky"; then
+-  AC_DEFINE(HAVE_DEV_FD)
+-  AC_DEFINE(DEV_FD_PREFIX, "/proc/self/fd/")
+-fi
++AC_DEFINE(HAVE_DEV_FD)
++AC_DEFINE(DEV_FD_PREFIX, "/proc/self/fd/")
+ ])
+ 
+ AC_DEFUN(BASH_CHECK_DEV_STDIN,

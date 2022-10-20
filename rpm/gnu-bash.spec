@@ -64,6 +64,9 @@ Patch126: bash-4.3-memleak-lc_all.patch
 # bash-4.4 builds loadable builtin examples by default
 # this patch disables it
 Patch127: bash-4.4-no-loadable-builtins.patch
+# Don't use /dev/fd as it is broken in scratchbox2:
+#   /bin/bash: line 1: /dev/fd/62: No such file or directory
+Patch128: bash-force-proc-self-fd.patch
 
 BuildRequires: texinfo bison
 BuildRequires: ncurses-devel
